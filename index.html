@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Purchase Receive</title>
+<title>Mines_Step2 - Order Received Form</title>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -180,12 +180,8 @@
       <div id="verifyList"></div>
 
       <div class="field" style="margin-top:16px;">
-        <label>Received By</label>
-        <input type="text" id="receivedBy" placeholder="e.g. Store Keeper" autocomplete="off">
-      </div>
-      <div class="field">
-        <label>Remarks</label>
-        <textarea id="remarks" placeholder="Damage, shortage, notes…"></textarea>
+        <label>Receiver's Name</label>
+        <input type="text" id="receiverName" placeholder="e.g. Store Keeper" autocomplete="off">
       </div>
 
       <div class="btn-row">
@@ -219,7 +215,7 @@
  * ========================================================================= */
 
 const CONFIG = {
-  GAS_URL: 'https://script.google.com/macros/s/AKfycbxIptQUDywtnhU8j8yOXHi8fsSgGLugsaXJ57vyw8jikB1oleUeQV8ESyo12Hg4WXwg/exec'
+  GAS_URL: 'https://script.google.com/macros/s/AKfycbxd40EI7Dd8VScRTcXEq3mPo3Sacq1-UFY_Pdfz_RevCD0QCxKzRqwbbec924yZwPGX/exec'
 };
 
 const $ = (id) => document.getElementById(id);
@@ -306,8 +302,7 @@ const Receive = {
     const body = {
       action: 'receive',
       orderId: state.order.orderId,
-      receivedBy: $('receivedBy').value.trim(),
-      remarks: $('remarks').value.trim(),
+      receiverName: $('receiverName').value.trim(),
       items: items
     };
 
@@ -330,8 +325,7 @@ const Form = {
   reset() {
     state.order = null;
     $('orderId').value = '';
-    $('receivedBy').value = '';
-    $('remarks').value = '';
+    $('receiverName').value = '';
     $('verifyList').innerHTML = '';
     $('orderMeta').innerHTML = '';
     $('orderPanel').classList.remove('show');
@@ -358,7 +352,6 @@ const Recent = {
       const isFull = String(r.status).toLowerCase() === 'full';
       const chips = String(r.itemsText || '').split('\n').filter(Boolean)
         .map(line => `<span class="chip">${esc(line)}</span>`).join('');
-      const remarks = r.remarks ? `<div class="r-remarks">📝 ${esc(r.remarks)}</div>` : '';
       return `<div class="receipt">
         <div class="r-top">
           <span class="r-id">${esc(r.orderId)}</span>
@@ -367,9 +360,8 @@ const Recent = {
             <span class="r-time">${esc(time)}</span>
           </div>
         </div>
-        <div class="r-by"><b>Received by:</b> ${esc(r.receivedBy || '-')}</div>
+        <div class="r-by"><b>Receiver's name:</b> ${esc(r.receiverName || '-')}</div>
         <div class="items-chips">${chips}</div>
-        ${remarks}
       </div>`;
     }).join('');
   }
