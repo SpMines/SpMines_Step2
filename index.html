@@ -3,39 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mines_Step2 - Order Received Form</title>
+<title>Mines_Step1 - Entry Form</title>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --navy1:#081427; --navy2:#0d2148; --navy3:#0a1a36;
     --glass:rgba(255,255,255,.055); --glass-brd:rgba(120,170,255,.20);
     --blue:#5b9dff; --blue2:#2f6fe6; --gold:#e8c87a;
-    --ink:#eaf1ff; --muted:#9fb4d6; --ok:#5ad6a0; --warn:#ffcf6b; --danger:#ff7a8a;
+    --ink:#eaf1ff; --muted:#9fb4d6; --ok:#5ad6a0; --danger:#ff7a8a;
   }
   *{box-sizing:border-box;margin:0;padding:0;font-family:'Jost',sans-serif;}
   body{
     min-height:100vh;color:var(--ink);padding:22px 14px 50px;
     background:
       radial-gradient(1100px 600px at 10% -10%, #14336b 0%, transparent 55%),
-      radial-gradient(900px 500px at 110% 10%, #0f5e44 0%, transparent 50%),
+      radial-gradient(900px 500px at 110% 10%, #123e7a 0%, transparent 50%),
       linear-gradient(160deg, var(--navy1), var(--navy2) 55%, var(--navy3));
     background-attachment:fixed;
   }
   .wrap{max-width:760px;margin:0 auto;}
 
+  /* Header */
   .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
   .brand{display:flex;align-items:center;gap:11px;}
   .logo{
     width:42px;height:42px;border-radius:12px;flex-shrink:0;
-    background:linear-gradient(135deg,#3fb98a,#1f9e6e);
+    background:linear-gradient(135deg,var(--blue),var(--blue2));
     display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;color:#fff;
-    box-shadow:0 8px 24px -8px rgba(63,185,138,.7), inset 0 0 0 1px rgba(232,200,122,.35);
+    box-shadow:0 8px 24px -8px rgba(91,157,255,.7), inset 0 0 0 1px rgba(232,200,122,.35);
   }
   h1{font-size:1.4rem;font-weight:600;letter-spacing:-.2px;}
   .h-sub{font-size:.78rem;color:var(--muted);font-weight:400;}
-  .nav-link{font-size:.8rem;color:var(--blue);text-decoration:none;border:1px solid var(--glass-brd);padding:7px 14px;border-radius:30px;transition:.15s;}
-  .nav-link:hover{background:rgba(91,157,255,.12);}
+  .oid-badge{
+    background:linear-gradient(135deg, rgba(232,200,122,.18), rgba(91,157,255,.14));
+    border:1px solid rgba(232,200,122,.45);color:var(--gold);
+    padding:7px 15px;border-radius:30px;font-weight:600;font-size:.82rem;letter-spacing:.5px;white-space:nowrap;
+  }
 
+  /* Card */
   .card{
     background:var(--glass);border:1px solid var(--glass-brd);border-radius:20px;
     padding:24px 22px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
@@ -46,92 +51,99 @@
   .card-title h2{font-size:1.05rem;font-weight:600;}
 
   label{display:block;font-size:.78rem;font-weight:500;color:var(--muted);margin:0 0 7px 2px;}
-  input,textarea{
+  input,textarea,select{
     width:100%;padding:12px 14px;border:1px solid var(--glass-brd);border-radius:12px;
     font-size:.95rem;background:rgba(8,18,40,.55);color:var(--ink);transition:.18s;
   }
   input::placeholder,textarea::placeholder{color:#6b80a6;}
-  input:focus,textarea:focus{outline:none;border-color:var(--blue);background:rgba(8,18,40,.85);box-shadow:0 0 0 4px rgba(91,157,255,.18);}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--blue);background:rgba(8,18,40,.85);box-shadow:0 0 0 4px rgba(91,157,255,.18);}
+  select{appearance:none;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 16px) center,calc(100% - 11px) center;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:30px;}
+  select option{background:#0d2148;color:var(--ink);}
   .field{margin-bottom:18px;}
-  textarea{resize:vertical;min-height:60px;}
+  textarea{resize:vertical;min-height:64px;}
 
-  /* Fetch row */
-  .fetch-row{display:flex;gap:9px;align-items:flex-end;}
-  .fetch-row .field{flex:1;margin-bottom:0;}
-  .fetch-btn{
-    flex:0 0 auto;padding:12px 20px;border:none;border-radius:12px;cursor:pointer;height:46px;
-    background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;font-weight:600;font-size:.92rem;transition:.18s;
-    display:flex;align-items:center;gap:8px;
+  /* Items */
+  .items-head label{margin-bottom:11px;color:var(--blue);font-weight:600;font-size:.86rem;}
+  .item-row{display:flex;gap:9px;margin-bottom:10px;align-items:center;flex-wrap:wrap;}
+  .item-row .name{flex:1 1 150px;min-width:120px;}
+  .item-row .qty{flex:0 0 70px;width:70px;text-align:center;}
+  .item-row .unit{flex:0 0 104px;width:104px;}
+  .item-row .unit-custom{flex:0 0 92px;width:92px;}
+  .del{
+    flex:0 0 42px;width:42px;height:46px;border:1px solid rgba(255,122,138,.3);border-radius:10px;
+    background:rgba(255,122,138,.1);color:var(--danger);font-size:1.2rem;cursor:pointer;transition:.15s;line-height:1;
   }
-  .fetch-btn:hover{transform:translateY(-1px);}
-  .fetch-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
-
-  /* Order panel */
-  .order-panel{display:none;margin-top:18px;border-top:1px solid var(--glass-brd);padding-top:18px;}
-  .order-panel.show{display:block;animation:pop .3s ease;}
-  .order-meta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;}
-  .meta-pill{font-size:.82rem;color:var(--ink);background:rgba(8,18,40,.5);border:1px solid var(--glass-brd);padding:7px 13px;border-radius:10px;}
-  .meta-pill b{color:var(--muted);font-weight:400;font-size:.74rem;display:block;margin-bottom:1px;}
-
-  .verify-head{font-size:.86rem;color:var(--ok);font-weight:600;margin-bottom:10px;}
-  .v-row{
-    display:flex;gap:10px;align-items:center;background:rgba(8,18,40,.4);
-    border:1px solid var(--glass-brd);border-radius:12px;padding:10px 12px;margin-bottom:9px;flex-wrap:wrap;
+  .del:hover{background:rgba(255,122,138,.2);}
+  .add{
+    width:100%;padding:11px;border:1px dashed rgba(91,157,255,.5);background:rgba(91,157,255,.07);
+    color:var(--blue);border-radius:12px;font-weight:500;font-size:.9rem;cursor:pointer;margin-top:4px;transition:.15s;
   }
-  .v-name{flex:1 1 130px;min-width:110px;font-size:.92rem;font-weight:500;}
-  .v-ordered{flex:0 0 auto;font-size:.8rem;color:var(--muted);background:rgba(91,157,255,.1);border:1px solid rgba(91,157,255,.25);padding:5px 10px;border-radius:8px;}
-  .v-ordered b{color:#cfe0ff;}
-  .v-recv-wrap{flex:0 0 auto;display:flex;align-items:center;gap:6px;}
-  .v-recv-wrap span{font-size:.78rem;color:var(--ok);}
-  .v-recv{width:78px;text-align:center;padding:9px 8px;}
-  .v-unit{font-size:.8rem;color:var(--muted);min-width:34px;}
+  .add:hover{background:rgba(91,157,255,.14);}
 
-  .btn-row{display:flex;gap:10px;margin-top:20px;}
+  /* Buttons */
+  .btn-row{display:flex;gap:10px;margin-top:22px;}
   .submit{
     flex:1;padding:15px;border:none;border-radius:14px;cursor:pointer;
-    background:linear-gradient(135deg,#3fb98a,#1f9e6e);color:#fff;
+    background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;
     font-size:1rem;font-weight:600;letter-spacing:.3px;transition:.18s;
-    box-shadow:0 12px 28px -12px rgba(31,158,110,.8), inset 0 0 0 1px rgba(232,200,122,.3);
+    box-shadow:0 12px 28px -12px rgba(47,111,230,.8), inset 0 0 0 1px rgba(232,200,122,.3);
     display:flex;align-items:center;justify-content:center;gap:9px;
   }
   .submit:hover{transform:translateY(-2px);}
-  .submit:disabled{opacity:.6;cursor:not-allowed;transform:none;}
-  .reset{
+  .submit:disabled{opacity:.7;cursor:not-allowed;transform:none;}
+  .cancel{
     padding:15px 18px;border:1px solid var(--glass-brd);border-radius:14px;background:transparent;
-    color:var(--muted);font-weight:500;cursor:pointer;transition:.15s;
+    color:var(--muted);font-weight:500;cursor:pointer;display:none;transition:.15s;
   }
-  .reset:hover{background:rgba(255,255,255,.05);color:var(--ink);}
-
+  .cancel:hover{background:rgba(255,255,255,.05);color:var(--ink);}
+  .cancel.show{display:block;}
   .spin{width:17px;height:17px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite;display:none;}
   .spin.show{display:inline-block;}
   @keyframes rot{to{transform:rotate(360deg);}}
 
+  /* Toast */
   .toast{margin-top:16px;padding:13px 15px;border-radius:12px;font-size:.88rem;font-weight:500;display:none;}
   .toast.show{display:block;animation:pop .3s ease;}
   .toast.ok{background:rgba(90,214,160,.12);border:1px solid rgba(90,214,160,.4);color:var(--ok);}
   .toast.err{background:rgba(255,122,138,.12);border:1px solid rgba(255,122,138,.4);color:var(--danger);}
   @keyframes pop{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 
-  /* Recent receipts */
+  /* Recent list */
   .recent-wrap{position:relative;min-height:90px;}
-  .receipt{border:1px solid var(--glass-brd);border-radius:15px;padding:15px 16px;margin-bottom:12px;background:rgba(8,18,40,.4);transition:.18s;}
-  .receipt:hover{border-color:rgba(63,185,138,.4);}
-  .r-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;flex-wrap:wrap;}
-  .r-id{font-weight:600;color:var(--gold);font-size:.92rem;letter-spacing:.4px;}
-  .r-time{font-size:.74rem;color:var(--muted);}
-  .badge{font-size:.74rem;font-weight:600;padding:4px 11px;border-radius:20px;}
-  .badge.full{background:rgba(90,214,160,.15);border:1px solid rgba(90,214,160,.45);color:var(--ok);}
-  .badge.partial{background:rgba(255,207,107,.13);border:1px solid rgba(255,207,107,.45);color:var(--warn);}
-  .r-by{font-size:.88rem;color:var(--ink);margin-bottom:7px;}
-  .r-by b{color:var(--muted);font-weight:400;font-size:.78rem;}
-  .items-chips{display:flex;flex-wrap:wrap;gap:6px;}
-  .chip{background:rgba(63,185,138,.12);border:1px solid rgba(63,185,138,.28);color:#cdeede;padding:4px 10px;border-radius:8px;font-size:.8rem;}
-  .r-remarks{font-size:.82rem;color:var(--muted);margin-top:7px;}
+  .order{
+    border:1px solid var(--glass-brd);border-radius:15px;padding:15px 16px;margin-bottom:12px;
+    background:rgba(8,18,40,.4);transition:.18s;
+  }
+  .order:hover{border-color:rgba(91,157,255,.4);}
+  .order-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;flex-wrap:wrap;}
+  .order-id{font-weight:600;color:var(--gold);font-size:.92rem;letter-spacing:.4px;}
+  .order-recv{color:var(--ink);font-size:.92rem;}
+  .order-recv b{color:var(--muted);font-weight:400;font-size:.8rem;}
+  .order-time{font-size:.74rem;color:var(--muted);}
+  .items-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
+  .chip{
+    background:rgba(91,157,255,.12);border:1px solid rgba(91,157,255,.25);color:#cfe0ff;
+    padding:4px 10px;border-radius:8px;font-size:.8rem;
+  }
+  .chip span{color:var(--gold);font-weight:600;margin-left:4px;}
+  .order-remarks{font-size:.82rem;color:var(--muted);margin-top:5px;}
+  .order-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:11px;flex-wrap:wrap;}
+  .countdown{font-size:.76rem;color:var(--ok);font-weight:500;}
+  .edit-btn{
+    border:1px solid rgba(232,200,122,.45);background:rgba(232,200,122,.1);color:var(--gold);
+    padding:7px 16px;border-radius:10px;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s;
+  }
+  .edit-btn:hover{background:rgba(232,200,122,.2);}
+  .locked-tag{font-size:.78rem;color:#7184a8;display:flex;align-items:center;gap:5px;}
 
-  .loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(8,18,40,.35);backdrop-filter:blur(2px);border-radius:14px;z-index:5;}
+  /* Loader */
+  .loader{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+    background:rgba(8,18,40,.35);backdrop-filter:blur(2px);border-radius:14px;z-index:5;
+  }
   .loader.hide{display:none;}
-  .ring{width:38px;height:38px;border:3.5px solid rgba(63,185,138,.25);border-top-color:#3fb98a;border-radius:50%;animation:rot .8s linear infinite;}
-  .loader p{font-size:.82rem;color:var(--muted);}
+  .ring{width:38px;height:38px;border:3.5px solid rgba(91,157,255,.25);border-top-color:var(--blue);border-radius:50%;animation:rot .8s linear infinite;}
+  .loader p{font-size:.82rem;color:var(--muted);letter-spacing:.3px;}
   .empty{text-align:center;color:var(--muted);font-size:.86rem;padding:24px 0;}
 
   .foot{text-align:center;margin-top:22px;font-size:.72rem;color:#6b80a6;}
@@ -139,10 +151,7 @@
   @media (max-width:480px){
     h1{font-size:1.22rem;}
     .card{padding:20px 16px;}
-    .fetch-row{flex-wrap:wrap;}
-    .fetch-row .field{flex:1 1 100%;}
-    .fetch-btn{width:100%;justify-content:center;}
-    .v-name{flex:1 1 100%;}
+    .item-row .name{flex:1 1 100%;}
   }
 </style>
 </head>
@@ -151,235 +160,351 @@
 
   <div class="topbar">
     <div class="brand">
-      <div class="logo">R</div>
+      <div class="logo">P</div>
       <div>
-        <h1>Purchase Receive</h1>
-        <div class="h-sub">SP Mines &middot; Goods receipt</div>
+        <h1>Purchase Entry</h1>
+        <div class="h-sub">SP Mines &middot; Procurement</div>
       </div>
     </div>
-    <a class="nav-link" href="https://spmines.github.io/SpMines_Step1/">→ New Purchase</a>
+    <span class="oid-badge" id="orderId">REQ-••••</span>
   </div>
 
-  <!-- Fetch + verify -->
+  <!-- Entry / Edit form -->
   <div class="card">
-    <div class="card-title"><h2>Receive Against Order</h2></div>
-
-    <div class="fetch-row">
-      <div class="field">
-        <label>Order ID</label>
-        <input type="text" id="orderId" placeholder="e.g. REQ-0001" autocomplete="off">
-      </div>
-      <button class="fetch-btn" id="fetchBtn" type="button">
-        <span class="spin" id="fetchSpin"></span><span>Fetch</span>
-      </button>
+    <div class="card-title">
+      <h2 id="formTitle">New Purchase</h2>
     </div>
 
-    <div class="order-panel" id="orderPanel">
-      <div class="order-meta" id="orderMeta"></div>
-      <div class="verify-head">Verify received quantities</div>
-      <div id="verifyList"></div>
+    <div class="field">
+      <label>Requirement Receiver Name</label>
+      <input type="text" id="receiver" placeholder="e.g. Store Keeper" autocomplete="off">
+    </div>
 
-      <div class="field" style="margin-top:16px;">
-        <label>Receiver's Name</label>
-        <input type="text" id="receiverName" placeholder="e.g. Store Keeper" autocomplete="off">
-      </div>
+    <div class="field">
+      <label>Receiver Name</label>
+      <input type="text" id="receiverName" placeholder="e.g. Ramesh Kumar" autocomplete="off">
+    </div>
 
-      <div class="btn-row">
-        <button class="submit" id="submitBtn" type="button">
-          <span class="spin" id="submitSpin"></span><span>Confirm Receipt</span>
-        </button>
-        <button class="reset" id="resetBtn" type="button">Reset</button>
-      </div>
+    <div class="field items-head">
+      <label>Items</label>
+      <div id="itemList"></div>
+      <button class="add" id="addItem" type="button">+ Add Item</button>
+    </div>
+
+    <div class="field">
+      <label>Remarks</label>
+      <textarea id="remarks" placeholder="Urgency, specifications, notes…"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="submit" id="submitBtn" type="button">
+        <span class="spin" id="spin"></span>
+        <span id="submitLabel">Submit Purchase</span>
+      </button>
+      <button class="cancel" id="cancelBtn" type="button">Cancel</button>
     </div>
 
     <div class="toast" id="toast"></div>
   </div>
 
-  <!-- Recent receipts -->
+  <!-- Recent 10 -->
   <div class="card">
-    <div class="card-title"><h2>Recent Receipts</h2><span class="h-sub">Last 10</span></div>
+    <div class="card-title">
+      <h2>Recent Purchases</h2>
+      <span class="h-sub">Last 10</span>
+    </div>
     <div class="recent-wrap">
-      <div class="loader" id="loader"><div class="ring"></div><p>Loading receipts…</p></div>
+      <div class="loader" id="loader"><div class="ring"></div><p>Loading purchases…</p></div>
       <div id="recentList"></div>
     </div>
   </div>
 
-  <p class="foot">Built by Somnath Karmakar</p>
+  <p class="foot">Built by Somnath Karmakar &middot; Editing window: 2 hours</p>
 </div>
 
 <script>
 /* ============================================================================
- *  PURCHASE RECEIVE — FRONTEND
- *  Fetch an order by ID → verify received quantities → log the receipt.
- *  Shares the same Apps Script web app as the Purchase form.
+ *  PURCHASE ENTRY — FRONTEND
+ *  Talks to the Apps Script web app. Create / list / edit (within 2 hours).
  * ========================================================================= */
 
+/* ---- Configuration ----------------------------------------------------- */
 const CONFIG = {
-  GAS_URL: 'https://script.google.com/macros/s/AKfycbxZdBeycXCCzAsf1CjKX8kKEbK_F_qed7GbYLuoOB0zjp_b-smS-QOVAZOAFUgOcHWO/exec'
+  GAS_URL: 'https://script.google.com/macros/s/AKfycbxZdBeycXCCzAsf1CjKX8kKEbK_F_qed7GbYLuoOB0zjp_b-smS-QOVAZOAFUgOcHWO/exec',
+  EDIT_WINDOW_MS: 2 * 60 * 60 * 1000,            // mirror of the server rule
+  UNITS: ['Kg', 'Nos', 'Litre', 'g'],            // presets; "Custom" is added in UI
+  CUSTOM: '__custom'
 };
 
+/* ---- Tiny DOM helper --------------------------------------------------- */
 const $ = (id) => document.getElementById(id);
-const state = { order: null };   // currently fetched order
 
-/* ---- API client -------------------------------------------------------- */
-const Api = {
-  get:  (qs)   => fetch(CONFIG.GAS_URL + (qs || '')).then(r => r.json()),
-  post: (body) => fetch(CONFIG.GAS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids CORS preflight
-    body: JSON.stringify(body)
-  }).then(r => r.json())
+/* ---- App state --------------------------------------------------------- */
+const state = {
+  editingId: null,   // null = create mode; otherwise the Order ID being edited
+  orders: [],        // last fetched orders
+  ticker: null       // countdown interval handle
 };
 
-/* ---- Toast ------------------------------------------------------------- */
+/* ============================================================================
+ *  ITEM ROWS  (name + qty + unit, with optional custom unit)
+ * ========================================================================= */
+const ItemRows = {
+  list: () => $('itemList'),
+
+  add(item) {
+    const name = item ? item.name : '';
+    const qty  = item ? item.qty  : '';
+    const unit = item ? item.unit : 'Nos';
+    const isCustom = unit && CONFIG.UNITS.indexOf(unit) === -1;
+
+    const options = CONFIG.UNITS.map(u =>
+      `<option value="${u}" ${(!isCustom && unit === u) ? 'selected' : ''}>${u}</option>`
+    ).join('') + `<option value="${CONFIG.CUSTOM}" ${isCustom ? 'selected' : ''}>Custom…</option>`;
+
+    const row = document.createElement('div');
+    row.className = 'item-row';
+    row.innerHTML = `
+      <input class="name" type="text" placeholder="Item name" value="${esc(name)}" autocomplete="off">
+      <input class="qty" type="number" min="0" step="any" placeholder="Qty" value="${esc(qty)}">
+      <select class="unit">${options}</select>
+      <input class="unit-custom" type="text" placeholder="Unit" value="${isCustom ? esc(unit) : ''}" ${isCustom ? '' : 'hidden'}>
+      <button class="del" type="button" title="Remove">&times;</button>`;
+
+    const select = row.querySelector('.unit');
+    const custom = row.querySelector('.unit-custom');
+    select.addEventListener('change', () => {
+      const showCustom = select.value === CONFIG.CUSTOM;
+      custom.hidden = !showCustom;
+      if (showCustom) custom.focus();
+    });
+
+    row.querySelector('.del').onclick = () => {
+      if (this.list().children.length > 1) row.remove();
+      else { row.querySelector('.name').value = ''; row.querySelector('.qty').value = ''; }
+    };
+
+    this.list().appendChild(row);
+  },
+
+  read() {
+    return [...this.list().querySelectorAll('.item-row')].map(r => {
+      const select = r.querySelector('.unit');
+      const unit = select.value === CONFIG.CUSTOM
+        ? r.querySelector('.unit-custom').value.trim()
+        : select.value;
+      return {
+        name: r.querySelector('.name').value.trim(),
+        qty:  r.querySelector('.qty').value.trim(),
+        unit: unit || 'Nos'
+      };
+    }).filter(i => i.name !== '');
+  },
+
+  reset(items) {
+    this.list().innerHTML = '';
+    if (items && items.length) items.forEach(i => this.add(i));
+    else this.add();
+  }
+};
+
+/* ============================================================================
+ *  FORM  (mode switching + submit)
+ * ========================================================================= */
+const Form = {
+  toCreateMode() {
+    state.editingId = null;
+    $('formTitle').textContent = 'New Purchase';
+    $('cancelBtn').classList.remove('show');
+    $('submitLabel').textContent = 'Submit Purchase';
+    $('orderId').textContent = 'REQ-••••';
+    $('receiver').value = '';
+    $('receiverName').value = '';
+    $('remarks').value = '';
+    ItemRows.reset();
+  },
+
+  toEditMode(order) {
+    state.editingId = order.orderId;
+    $('formTitle').textContent = 'Edit Purchase';
+    $('cancelBtn').classList.add('show');
+    $('submitLabel').textContent = 'Update Purchase';
+    $('orderId').textContent = order.orderId;
+    $('receiver').value = order.receiver || '';
+    $('receiverName').value = order.receiverName || '';
+    $('remarks').value = order.remarks || '';
+    ItemRows.reset(order.items);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  },
+
+  submit() {
+    const receiver     = $('receiver').value.trim();
+    const receiverName = $('receiverName').value.trim();
+    const remarks      = $('remarks').value.trim();
+    const items        = ItemRows.read();
+
+    if (!receiver)        return Toast.show('Please enter the requirement receiver name.', 'err');
+    if (items.length === 0) return Toast.show('Please add at least one item.', 'err');
+
+    const body = state.editingId
+      ? { action: 'update', orderId: state.editingId, receiver, receiverName, items, remarks }
+      : { action: 'create', receiver, receiverName, items, remarks };
+
+    this._setLoading(true);
+    Api.post(body)
+      .then(res => {
+        if (!res.ok) return Toast.show(res.error || 'Request failed.', 'err');
+        const n = res.order.items.length;
+        Toast.show(
+          state.editingId
+            ? `Updated ${res.order.orderId}.`
+            : `Saved ${res.order.orderId} (${n} item${n > 1 ? 's' : ''}).`,
+          'ok'
+        );
+        this.toCreateMode();
+        Recent.load();
+      })
+      .catch(err => Toast.show('Network error — check the URL / access settings. ' + err, 'err'))
+      .finally(() => this._setLoading(false));
+  },
+
+  _setLoading(on) {
+    $('submitBtn').disabled = on;
+    $('spin').classList.toggle('show', on);
+  }
+};
+
+/* ============================================================================
+ *  RECENT PURCHASES  (render + live 2-hour countdown)
+ * ========================================================================= */
+const Recent = {
+  load() {
+    $('loader').classList.remove('hide');
+    Api.get('?action=list')
+      .then(res => { state.orders = (res.ok && res.orders) ? res.orders : []; this.render(); })
+      .catch(() => { $('recentList').innerHTML = '<div class="empty">Couldn\'t load. Check the URL / access settings.</div>'; })
+      .finally(() => $('loader').classList.add('hide'));
+  },
+
+  render() {
+    const box = $('recentList');
+    if (!state.orders.length) { box.innerHTML = '<div class="empty">No purchases yet.</div>'; return; }
+
+    box.innerHTML = state.orders.map(o => {
+      const time = o.createdAt
+        ? new Date(o.createdAt).toLocaleString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })
+        : '';
+      const msLeft = this._msLeft(o);
+      const chips = (o.items || []).map(i =>
+        `<span class="chip">${esc(i.name)}<span>×${esc(String(i.qty))} ${esc(i.unit || '')}</span></span>`
+      ).join('');
+      const remarks = o.remarks ? `<div class="order-remarks">📝 ${esc(o.remarks)}</div>` : '';
+      const foot = msLeft > 0
+        ? `<span class="countdown" data-cd="${esc(o.orderId)}">⏳ Editable for ${clock(msLeft)}</span>
+           <button class="edit-btn" data-edit="${esc(o.orderId)}">Edit</button>`
+        : `<span class="locked-tag">🔒 Locked (2 hours passed)</span>`;
+
+      return `<div class="order">
+        <div class="order-top">
+          <span class="order-id">${esc(o.orderId)}</span>
+          <span class="order-time">${time}</span>
+        </div>
+        <div class="order-recv"><b>Requirement Receiver:</b> ${esc(o.receiver || '-')}</div>
+        <div class="order-recv"><b>Receiver Name:</b> ${esc(o.receiverName || '-')}</div>
+        <div class="items-chips">${chips}</div>
+        ${remarks}
+        <div class="order-foot">${foot}</div>
+      </div>`;
+    }).join('');
+
+    box.querySelectorAll('[data-edit]').forEach(btn => {
+      btn.onclick = () => {
+        const o = state.orders.find(x => String(x.orderId) === btn.getAttribute('data-edit'));
+        if (!o) return;
+        if (this._msLeft(o) <= 0) { Toast.show('Editing window has closed (2 hours passed).', 'err'); this.load(); return; }
+        Form.toEditMode(o);
+      };
+    });
+  },
+
+  // Live remaining edit time, computed from the creation timestamp.
+  _msLeft(o) {
+    if (!o.createdAt) return 0;
+    return Math.max(0, CONFIG.EDIT_WINDOW_MS - (Date.now() - new Date(o.createdAt).getTime()));
+  },
+
+  startTicker() {
+    if (state.ticker) clearInterval(state.ticker);
+    state.ticker = setInterval(() => {
+      let rerender = false;
+      state.orders.forEach(o => {
+        const el = document.querySelector(`[data-cd="${cssEsc(o.orderId)}"]`);
+        const ms = this._msLeft(o);
+        if (el) {
+          if (ms <= 0) rerender = true;
+          else el.textContent = '⏳ Editable for ' + clock(ms);
+        }
+      });
+      if (rerender) this.render();
+    }, 1000);
+  }
+};
+
+/* ============================================================================
+ *  API CLIENT
+ * ========================================================================= */
+const Api = {
+  get(qs) {
+    return fetch(CONFIG.GAS_URL + (qs || '')).then(r => r.json());
+  },
+  post(body) {
+    return fetch(CONFIG.GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids a CORS preflight
+      body: JSON.stringify(body)
+    }).then(r => r.json());
+  }
+};
+
+/* ============================================================================
+ *  TOAST
+ * ========================================================================= */
 const Toast = {
-  show(msg, kind) {
+  show(message, kind) {
     const t = $('toast');
-    t.textContent = msg;
+    t.textContent = message;
     t.className = 'toast show ' + (kind || 'ok');
     if (kind === 'ok') setTimeout(() => t.classList.remove('show'), 4000);
   }
 };
 
-/* ---- Lookup: fetch an order and render the verification list ------------ */
-const Lookup = {
-  run() {
-    const id = $('orderId').value.trim();
-    if (!id) return Toast.show('Please enter an Order ID.', 'err');
-
-    this._loading(true);
-    Api.get('?action=order&orderId=' + encodeURIComponent(id))
-      .then(res => {
-        if (!res.ok) { this._hidePanel(); return Toast.show(res.error || 'Order not found.', 'err'); }
-        state.order = res.order;
-        this._renderPanel(res.order);
-        Toast.show('Order ' + res.order.orderId + ' loaded. Verify the quantities.', 'ok');
-      })
-      .catch(err => Toast.show('Network error — check the URL / access settings. ' + err, 'err'))
-      .finally(() => this._loading(false));
-  },
-
-  _renderPanel(order) {
-    const time = order.createdAt
-      ? new Date(order.createdAt).toLocaleString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })
-      : '-';
-    $('orderMeta').innerHTML =
-      `<div class="meta-pill"><b>Order ID</b>${esc(order.orderId)}</div>
-       <div class="meta-pill"><b>Receiver</b>${esc(order.receiver || '-')}</div>
-       <div class="meta-pill"><b>Ordered on</b>${esc(time)}</div>`;
-
-    // One verify row per item. Received qty is prefilled with the ordered qty.
-    $('verifyList').innerHTML = (order.items || []).map((i, idx) =>
-      `<div class="v-row">
-         <span class="v-name">${esc(i.name)}</span>
-         <span class="v-ordered">Ordered: <b>${esc(String(i.qty))} ${esc(i.unit || '')}</b></span>
-         <span class="v-recv-wrap">
-           <span>Received</span>
-           <input class="v-recv" type="number" min="0" step="any" data-idx="${idx}" value="${esc(String(i.qty))}">
-           <span class="v-unit">${esc(i.unit || '')}</span>
-         </span>
-       </div>`
-    ).join('');
-
-    $('orderPanel').classList.add('show');
-  },
-
-  _hidePanel() { state.order = null; $('orderPanel').classList.remove('show'); },
-  _loading(on) { $('fetchBtn').disabled = on; $('fetchSpin').classList.toggle('show', on); }
-};
-
-/* ---- Submit the receipt ------------------------------------------------ */
-const Receive = {
-  submit() {
-    if (!state.order) return Toast.show('Fetch an order first.', 'err');
-
-    const inputs = [...$('verifyList').querySelectorAll('.v-recv')];
-    const items = state.order.items.map((i, idx) => {
-      const box = inputs.find(b => Number(b.getAttribute('data-idx')) === idx);
-      return { name: i.name, qty: i.qty, unit: i.unit, received: box ? box.value.trim() : '' };
-    });
-
-    const body = {
-      action: 'receive',
-      orderId: state.order.orderId,
-      receiverName: $('receiverName').value.trim(),
-      items: items
-    };
-
-    this._loading(true);
-    Api.post(body)
-      .then(res => {
-        if (!res.ok) return Toast.show(res.error || 'Could not save receipt.', 'err');
-        Toast.show(`Receipt saved for ${res.receipt.orderId} — ${res.receipt.status}.`, 'ok');
-        Form.reset();
-        Recent.load();
-      })
-      .catch(err => Toast.show('Network error — check the URL / access settings. ' + err, 'err'))
-      .finally(() => this._loading(false));
-  },
-  _loading(on) { $('submitBtn').disabled = on; $('submitSpin').classList.toggle('show', on); }
-};
-
-/* ---- Form reset -------------------------------------------------------- */
-const Form = {
-  reset() {
-    state.order = null;
-    $('orderId').value = '';
-    $('receiverName').value = '';
-    $('verifyList').innerHTML = '';
-    $('orderMeta').innerHTML = '';
-    $('orderPanel').classList.remove('show');
-  }
-};
-
-/* ---- Recent receipts --------------------------------------------------- */
-const Recent = {
-  load() {
-    $('loader').classList.remove('hide');
-    Api.get('?action=receipts')
-      .then(res => this._render((res.ok && res.receipts) ? res.receipts : []))
-      .catch(() => { $('recentList').innerHTML = '<div class="empty">Couldn\'t load. Check the URL / access settings.</div>'; })
-      .finally(() => $('loader').classList.add('hide'));
-  },
-  _render(receipts) {
-    const box = $('recentList');
-    if (!receipts.length) { box.innerHTML = '<div class="empty">No receipts yet.</div>'; return; }
-
-    box.innerHTML = receipts.map(r => {
-      const time = r.receiptTime
-        ? new Date(r.receiptTime).toLocaleString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })
-        : '';
-      const isFull = String(r.status).toLowerCase() === 'full';
-      const chips = String(r.itemsText || '').split('\n').filter(Boolean)
-        .map(line => `<span class="chip">${esc(line)}</span>`).join('');
-      return `<div class="receipt">
-        <div class="r-top">
-          <span class="r-id">${esc(r.orderId)}</span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="badge ${isFull ? 'full' : 'partial'}">${esc(r.status)}</span>
-            <span class="r-time">${esc(time)}</span>
-          </div>
-        </div>
-        <div class="r-by"><b>Receiver's name:</b> ${esc(r.receiverName || '-')}</div>
-        <div class="items-chips">${chips}</div>
-      </div>`;
-    }).join('');
-  }
-};
-
-/* ---- Utilities --------------------------------------------------------- */
+/* ============================================================================
+ *  UTILITIES
+ * ========================================================================= */
 function esc(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
+function cssEsc(s) { return String(s).replace(/["\\]/g, '\\$&'); }
+function clock(ms) {
+  const total = Math.floor(ms / 1000);
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  const pad = (n) => String(n).padStart(2, '0');
+  return (h > 0 ? pad(h) + ':' : '') + pad(m) + ':' + pad(s);
+}
 
-/* ---- Wire-up ----------------------------------------------------------- */
-$('fetchBtn').onclick  = () => Lookup.run();
-$('orderId').addEventListener('keydown', e => { if (e.key === 'Enter') Lookup.run(); });
-$('submitBtn').onclick = () => Receive.submit();
-$('resetBtn').onclick  = () => Form.reset();
+/* ============================================================================
+ *  WIRE-UP & INIT
+ * ========================================================================= */
+$('addItem').onclick = () => ItemRows.add();
+$('submitBtn').onclick = () => Form.submit();
+$('cancelBtn').onclick = () => Form.toCreateMode();
 
-Recent.load();
+ItemRows.reset();   // start with one empty row
+Recent.load();      // fetch the last 10
+Recent.startTicker();
 </script>
 </body>
 </html>
